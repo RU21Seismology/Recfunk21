@@ -1,0 +1,56 @@
+#!/bin/csh
+#script to run multiple RF analyses
+#using a new-new version of JJPark's code (2019!!)
+#Input - 1:name of the site 2:fmax 
+#modified by Xiaoran Chen on 04/09/2020 to accept fmax
+
+#first run
+#name of the model
+echo $1-model >! rfmigrate_run
+#depth to which migration will be done
+echo 50 >> rfmigrate_run
+#fmax
+echo $2 >> rfmigrate_run
+#time intervals in SAC header
+echo 1 >> rfmigrate_run
+#name of pick file
+echo in_recpick >> rfmigrate_run
+#duration of data windows
+echo 80 >> rfmigrate_run
+#min number of traces
+echo 2 >> rfmigrate_run
+#rotate to LQT? -1 = YES, and change the value
+echo -1 >> rfmigrate_run
+echo 7.5 >> rfmigrate_run
+#change step in baz sweep 
+echo 1 >> rfmigrate_run
+echo 360 0 15 >> rfmigrate_run
+#epi sweep global
+echo 0 360 >> rfmigrate_run
+#change the spacing
+echo 1 >> rfmigrate_run
+echo 0 180 10 >> rfmigrate_run
+
+rfmigrate_21 < rfmigrate_run >! rfmigrate_LOG
+
+#rename output
+mv outr_baz.grid  $1_$2\_50km_baz.L.rgrid
+mv outt_baz.grid  $1_$2\_50km_baz.L.tgrid
+
+mv oumr_baz.grid  $1_$2\_50km_baz.mo.L.rgrid
+mv oumt_baz.grid  $1_$2\_50km_baz.mo.L.tgrid
+mv oumr_epi.grid  $1_$2\_epi_50km_360.mo.L.rgrid
+mv oumt_epi.grid  $1_$2\_epi_50km_360.mo.L.tgrid
+
+#plotbaz-short $1_$2\_50km_baz.L.rgrid $1_$2\_50km_baz.L.tgrid 0.1 $1 0.05
+#mv RFwig-baz.ps $1_$2\_50km_baz.L.ps
+#plotbaz-short $1_$2\_50km_baz.mo.L.rgrid $1_$2\_50km_baz.mo.L.tgrid 0.1 $1 0.05
+#mv RFwig-baz.ps $1_$2\_50km_baz.mo.L.ps
+#plotepi $1_$2\_epi_50km_360.mo.L.rgrid $1_$2\_epi_50km_360.mo.L.tgrid 0.1 0.05
+#mv RFwig-epi.ps $1_$2\_50km_epi_360.mo.L.ps
+
+#gmt psconvert $1_$2\_50km_baz.L.ps -Tj -A -P
+#gmt psconvert $1_$2\_50km_baz.mo.L.ps -Tj -A -P
+#gmt psconvert $1_$2\_50km_epi_360.mo.L.ps -Tj -A -P
+
+

@@ -1,0 +1,26 @@
+# shell to prepare data 
+# for RF analysis with Park-Levin MTC codes, version 2009
+# assumes data to be in SAC format
+# the shell produces two files - a list of events and 
+# Input - a list of base filenames, without channel designations. E.g. if the naming convention is 
+# YEAR.JDAY.HH.MM.SITE.C, where C stands for z, r or t, an entry in the list will be YEAR.JDAY.HH.MM.SITE
+#
+# Output a SAC macro that will open each event and let you put time marks in
+#
+# this shell assumes that data rotation and necessary 
+# cleanup, like demeaning and detrending and maybe a high-pass filter,
+# have all been done)
+#
+
+/bin/rm $1.recpick_input $1.sac.macro
+
+#below it is assumed that data were cut with 300 sec pre-event window.
+# if the window is different - change the value 
+#
+foreach i (`cat $1`)
+echo "r $i.?; chnhdr a 300; listhdr gcarc; plotpk markall on; writehdr over" >> $1.sac.macro
+end
+
+echo RUN SAC MACRO
+	
+

@@ -1,0 +1,40 @@
+#!/bin/csh
+#script to run multiple RF analyses
+#using a new-new version of JJPark's code (2019!!)
+#Input - 1:name of the site 2:fmax 
+#Modified by Xiaoran Chen on 04/09/2020 to accept fmax
+
+#first run
+#do not bootstrap
+echo 0 >! harmonic_run
+#model to use for stack
+echo $1-model >> harmonic_run
+#sampling rate
+echo 100 >> harmonic_run
+#inverse-variance weight
+echo 1 >> harmonic_run
+#depth to which migration will be done
+echo 50 >> harmonic_run
+#fmax
+echo $2 >> harmonic_run
+#time intervals in SAC header
+echo 1 >> harmonic_run
+#name of pick file
+echo in_recpick >> harmonic_run
+#duration of data windows
+echo 80 >> harmonic_run
+#rotate to LQT? -1 = YES and change the speed
+echo -1 >> harmonic_run
+echo 7.5 >> harmonic_run
+
+rfmig_mcboot_21 < harmonic_run >! harmonic_LOG
+
+#rename output
+mv outr_cexp.grid  $1_$2\_50km_cexp.L.rgrid
+mv outt_cexp.grid  $1_$2\_50km_cexp.L.tgrid
+
+bexp_ad.plot.txt $1_$2\_50km_cexp.L.rgrid $1_$2\_50km_cexp.L.tgrid 0.03 $1 $2 50
+mv $1_$2\_harmonic-stack_50km.ps $1_$2\_harmonic-stack_50km.L.ps
+
+gmt psconvert $1_$2\_harmonic-stack_50km.L.ps -Tj -A -P
+

@@ -1,0 +1,16 @@
+#!/bin/csh
+#input: 1: baz1 2: baz2
+#sitelist is a txt file containing site names, each row will be a site
+#fmaxlist is a txt file containing different maximum frequencies, each row will be a frequency value.
+cd $(put your path here which contains all the prepared records for each site)
+
+set dbaz = 5
+
+foreach site (`cat sitelist`)
+cd $site
+foreach fmax (`cat fmaxlist`)
+make-mo-RF.C.epi.txt $site $fmax $1 $2 $dbaz
+end
+cd ..
+
+end
