@@ -1,5 +1,5 @@
 # Recfunk21 （Version21 released on 2021:021:21:00:00）
-This software package **Recfunk21** (including all necessary shell scripts) is precompiled and provided for doing receiver function analysis using multitaper spectral correlation estimates. A step-by-step guide is provided together with this package. If you have any questions, please contact RU seismic group members: [Xiaoran Chen] (claire.rrchen@hotmail.com) or [Vadim Levin] (vadim.seismo@gmail.com).
+This software package **Recfunk21** (including all necessary shell scripts) is precompiled and provided for doing receiver function analysis using multitaper spectral correlation estimates. A step-by-step guide is provided together with this package. If you have any questions, please contact RU seismic group members: [Xiaoran Chen](claire.rrchen@hotmail.com) or [Vadim Levin](vadim.seismo@gmail.com).
 
 Relevant background reading: **Park and Levin (2000)** and **Park and Levin (2016a, 2016b)**
 
